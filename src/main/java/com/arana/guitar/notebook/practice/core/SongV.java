@@ -1,9 +1,6 @@
 package com.arana.guitar.notebook.practice.core;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="songs")
 public class SongV {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +18,6 @@ public class SongV {
     private String title;
     private Long artistId;
     private String video;
-    private Long tabId;
+    @OneToOne
+    private Tab tab;
 }

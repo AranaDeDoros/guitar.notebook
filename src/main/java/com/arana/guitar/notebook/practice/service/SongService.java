@@ -46,7 +46,7 @@ public class SongService {
                     song.setTitle(updatedSong.getTitle());
                     song.setArtistId(updatedSong.getArtistId());
                     song.setVideo(updatedSong.getVideo());
-                    song.setTabId(updatedSong.getTabId());
+                    song.setTab(updatedSong.getTab());
                     return repo.save(song);
                 });
 

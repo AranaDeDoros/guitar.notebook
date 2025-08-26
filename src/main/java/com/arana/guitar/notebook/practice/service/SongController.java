@@ -1,6 +1,8 @@
 package com.arana.guitar.notebook.practice.service;
 
+import com.arana.guitar.notebook.practice.core.Artist;
 import com.arana.guitar.notebook.practice.core.SongV;
+import com.arana.guitar.notebook.practice.core.Tab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class SongController {
 
     @GetMapping("/songs")
     public List<SongV> songs() {
-        service.Store(new SongV(null, "Sample Title", 1L, "youtube.com", 1L));
+        service.Store(new SongV(null, "Sample Title", 1L, "youtube.com", new Tab(1L,"")));
         return service.All();
     }
 

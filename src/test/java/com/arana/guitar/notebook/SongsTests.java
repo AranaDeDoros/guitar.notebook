@@ -1,6 +1,8 @@
 package com.arana.guitar.notebook;
 
+import com.arana.guitar.notebook.practice.core.Artist;
 import com.arana.guitar.notebook.practice.core.SongV;
+import com.arana.guitar.notebook.practice.core.Tab;
 import com.arana.guitar.notebook.practice.service.SongController;
 import com.arana.guitar.notebook.practice.service.SongService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +36,7 @@ class SongControllerTest {
 
     @BeforeEach
     void setUp() {
-        sampleSong = new SongV(1L, "Test Title", 1L, "youtube.com", 1L);
+        sampleSong = new SongV(1L, "Test Title", 1L,  "youtube.com", new Tab(1L , ""));
         objectMapper = new ObjectMapper();
     }
 
@@ -85,9 +87,9 @@ class SongControllerTest {
 
     @Test
     void testUpdate_existingId_returnsUpdatedSong() throws Exception {
-        SongV updatedSong = new SongV(null, "Updated Title", 2L, "youtube.com", 2L);
+        SongV updatedSong = new SongV(null, "Updated Title", 2L, "youtube.com", new Tab(1L , ""));
         when(service.Update(eq(1L), any(SongV.class)))
-                .thenReturn(Optional.of(new SongV(1L, "Updated Title", 2L, "youtube.com", 2L)));
+                .thenReturn(Optional.of(new SongV(1L, "Updated Title", 2L, "youtube.com", new Tab(1L , ""))));
 
         mockMvc.perform(put("/api/v1/songs/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +100,7 @@ class SongControllerTest {
 
     @Test
     void testUpdate_nonExistingId_returns404() throws Exception {
-        SongV updatedSong = new SongV(null, "Updated Title", 2L, "youtube.com", 2L);
+        SongV updatedSong = new SongV(null, "Updated Title", 2L, "youtube.com", new Tab(1L , ""));
         when(service.Update(eq(999L), any(SongV.class))).thenReturn(Optional.empty());
 
         mockMvc.perform(put("/api/v1/songs/update/999")
@@ -109,8 +111,8 @@ class SongControllerTest {
 
     @Test
     void testCreate_returnsOkWhenIdGreaterThanZero() throws Exception {
-        SongV input = new SongV(null, "New Song", 1L, "youtube.com", 1L);
-        SongV stored = new SongV(1L, "New Song", 1L, "youtube.com", 1L);
+        SongV input = new SongV(null, "New Song", 1L, "youtube.com", new Tab(1L , ""));
+        SongV stored = new SongV(1L, "New Song", 1L, "youtube.com", new Tab(1L , ""));
 
         when(service.Store(any(SongV.class))).thenReturn(stored);
 
