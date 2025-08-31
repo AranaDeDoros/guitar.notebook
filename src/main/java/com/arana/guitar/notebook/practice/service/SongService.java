@@ -1,6 +1,6 @@
 package com.arana.guitar.notebook.practice.service;
 
-import com.arana.guitar.notebook.practice.core.SongV;
+import com.arana.guitar.notebook.practice.models.SongV;
 import com.arana.guitar.notebook.practice.repo.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.arana.guitar.notebook.practice.service;
+package com.arana.guitar.notebook.practice.controllers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;

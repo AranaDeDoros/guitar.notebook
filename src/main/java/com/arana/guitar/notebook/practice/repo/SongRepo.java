@@ -1,5 +1,5 @@
 package com.arana.guitar.notebook.practice.repo;
-import com.arana.guitar.notebook.practice.core.Song;
+import com.arana.guitar.notebook.practice.models.Song;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

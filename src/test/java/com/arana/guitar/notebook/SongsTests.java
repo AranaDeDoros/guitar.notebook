@@ -1,9 +1,8 @@
 package com.arana.guitar.notebook;
 
-import com.arana.guitar.notebook.practice.core.Artist;
-import com.arana.guitar.notebook.practice.core.SongV;
-import com.arana.guitar.notebook.practice.core.Tab;
-import com.arana.guitar.notebook.practice.service.SongController;
+import com.arana.guitar.notebook.practice.models.SongV;
+import com.arana.guitar.notebook.practice.models.Tab;
+import com.arana.guitar.notebook.practice.controllers.SongController;
 import com.arana.guitar.notebook.practice.service.SongService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

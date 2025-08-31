@@ -1,8 +1,8 @@
-package com.arana.guitar.notebook.practice.service;
+package com.arana.guitar.notebook.practice.controllers;
 
-import com.arana.guitar.notebook.practice.core.Artist;
-import com.arana.guitar.notebook.practice.core.SongV;
-import com.arana.guitar.notebook.practice.core.Tab;
+import com.arana.guitar.notebook.practice.models.SongV;
+import com.arana.guitar.notebook.practice.models.Tab;
+import com.arana.guitar.notebook.practice.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class SongController {
 
     @GetMapping("/songs")
     public List<SongV> songs() {
-        service.Store(new SongV(null, "Sample Title", 1L, "youtube.com", new Tab(1L,"")));
+        //service.Store(new SongV(null, "Sample Title", 1L, "youtube.com", new Tab(1L,"")));
         return service.All();
     }
 
@@ -34,14 +34,14 @@ public class SongController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/songs/view/{id}")
+    @GetMapping("/songs/{id}/view")
     public ResponseEntity<SongV> view(@PathVariable Long id) {
         return service.Get(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/songs/delete/{id}")
+    @DeleteMapping("/songs/{id}/delete")
     public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
         boolean isDeleted = service.Delete(id);
         if (isDeleted) {
@@ -50,7 +50,7 @@ public class SongController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/songs/update/{id}")
+    @PutMapping("/songs/{id}/update")
     public ResponseEntity<SongV> updateSong(@PathVariable Long id, @RequestBody SongV updatedSong) {
         return service.Update(id, updatedSong)
                 .map(ResponseEntity::ok)

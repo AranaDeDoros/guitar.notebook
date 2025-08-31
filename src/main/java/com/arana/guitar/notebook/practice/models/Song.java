@@ -1,4 +1,4 @@
-package com.arana.guitar.notebook.practice.core;
+package com.arana.guitar.notebook.practice.models;
 
 
 

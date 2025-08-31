@@ -1,4 +1,4 @@
-package com.arana.guitar.notebook.practice.core;
+package com.arana.guitar.notebook.practice.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,15 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="songs")
-public class SongV {
+@Table(name="tabs")
+public class Tab {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String url;
 
-    private String title;
-    private Long artistId;
-    private String video;
-    @OneToOne
-    private Tab tab;
 }
