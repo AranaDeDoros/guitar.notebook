@@ -1,6 +1,7 @@
 package com.arana.guitar.notebook.practice.models.enums;
 
 public enum ProgressEnum {
+    NEW(0),
     BEGINNER(25),
     INTERMEDIATE(50),
     ADVANCED(75),
