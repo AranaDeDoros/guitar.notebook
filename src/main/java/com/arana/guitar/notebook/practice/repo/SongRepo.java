@@ -13,7 +13,7 @@ public class SongRepo {
     public ArrayList<Song> findAll(){
          arr = new ArrayList<Song>();
            arr.add(
-                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.ADVANCED))
+                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.ADVANCED, ""))
         );
           return arr;
     }
@@ -21,7 +21,7 @@ public class SongRepo {
     public Optional<Song> findById(long id){
        arr = new ArrayList<Song>();
         arr.add(
-                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.BEGINNER))
+                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.BEGINNER,""))
         );
         return arr.stream().filter(s -> s.getId() == id).findAny();
     }
@@ -29,7 +29,7 @@ public class SongRepo {
     public void remove(long id){
         arr = new ArrayList<Song>();
         arr.add(
-                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.FLUENT))
+                new Song(1L, "title", 1L, "youtube", 1L, new Progress(ProgressEnum.FLUENT,""))
         );
         arr.removeIf(song -> song.getId() == id);
     }

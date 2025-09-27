@@ -9,6 +9,7 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String comment;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -18,15 +19,17 @@ public class Progress {
     public Progress(ProgressEnum level) {
         this.level = level;
     }
+    public Progress(ProgressEnum level, String comment) {
+        this.level = level;
+        this.comment = comment;
+    }
 
     // Getters and Setters
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public ProgressEnum getLevel() {
         return level;
@@ -34,5 +37,14 @@ public class Progress {
 
     public void setLevel(ProgressEnum level) {
         this.level = level;
+    }
+
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
