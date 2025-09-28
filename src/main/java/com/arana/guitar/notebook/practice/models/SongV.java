@@ -16,8 +16,11 @@ public class SongV {
     private Long id;
 
     private String title;
-    private Long artistId;
+    @ManyToOne
+    @JoinColumn(name = "artist_id", nullable = false)
+    private Artist artist;
     private String video;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tab_id", unique = true) // Ensures uniqueness at DB level
     private Tab tab;
 }

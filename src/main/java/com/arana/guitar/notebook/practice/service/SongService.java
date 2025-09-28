@@ -44,7 +44,7 @@ public class SongService {
         return repo.findById(id)
                 .map(song -> {
                     song.setTitle(updatedSong.getTitle());
-                    song.setArtistId(updatedSong.getArtistId());
+                    song.setArtist(updatedSong.getArtist());
                     song.setVideo(updatedSong.getVideo());
                     song.setTab(updatedSong.getTab());
                     return repo.save(song);

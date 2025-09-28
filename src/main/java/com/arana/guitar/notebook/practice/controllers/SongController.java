@@ -22,7 +22,6 @@ public class SongController {
 
     @GetMapping("/songs")
     public List<SongV> songs() {
-        //service.Store(new SongV(null, "Sample Title", 1L, "youtube.com", new Tab(1L,"")));
         return service.All();
     }
 
@@ -45,7 +44,7 @@ public class SongController {
     public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
         boolean isDeleted = service.Delete(id);
         if (isDeleted) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.noContent().build();
     }

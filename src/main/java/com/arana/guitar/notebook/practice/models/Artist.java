@@ -29,6 +29,6 @@ public class Artist {
     }
 
 
-    @OneToMany(mappedBy = "artistId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SongV> songs = new ArrayList<>();
 }
