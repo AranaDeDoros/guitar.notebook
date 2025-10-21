@@ -1,7 +1,8 @@
 package com.arana.guitar.notebook.practice.service;
 
-import com.arana.guitar.notebook.practice.models.SongV;
-import com.arana.guitar.notebook.practice.repo.SongRepository;
+import com.arana.guitar.notebook.practice.dto.*;
+import com.arana.guitar.notebook.practice.models.*;
+import com.arana.guitar.notebook.practice.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,46 +11,71 @@ import java.util.Optional;
 
 @Service
 public class SongService {
-    private final SongRepository repo;
+
+    private final SongRepository songRepo;
+    private final ArtistRepository artistRepo;
+    private final TabRepository tabRepo;
 
     @Autowired
-    public SongService(SongRepository songRepository) {
-        this.repo = songRepository;
+    public SongService(SongRepository songRepo, ArtistRepository artistRepo, TabRepository tabRepo) {
+        this.songRepo = songRepo;
+        this.artistRepo = artistRepo;
+        this.tabRepo = tabRepo;
     }
 
-    public List<SongV> All(){
-        return repo.findAll();
+    public List<SongDTO> All() {
+        return songRepo.findAll()
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    public SongV Store(SongV song){
-        return repo.save(song);
+    public Optional<SongDTO> Get(Long id) {
+        return songRepo.findById(id).map(this::toDTO);
     }
 
-    public Optional<SongV> Get(Long id) {
-        return repo.findById(id);
+    public SongDTO Store(SongCreateDTO dto) {
+        Artist artist = artistRepo.findById(dto.getArtistId())
+                .orElseThrow(() -> new RuntimeException("Artist not found"));
+
+        Tab tab = new Tab();
+        tab.setUrl(dto.getTabUrl());
+
+        Song song = new Song();
+        song.setTitle(dto.getTitle());
+        song.setArtist(artist);
+        song.setVideo(dto.getVideo());
+        song.setTab(tab);
+
+        Song saved = songRepo.save(song);
+        return toDTO(saved);
     }
 
-    public Boolean Delete(Long id) {
-        if (!repo.existsById(id)) {
-            return false;
-        }
-        repo.deleteById(id);
+    public boolean Delete(Long id) {
+        if (!songRepo.existsById(id)) return false;
+        songRepo.deleteById(id);
         return true;
     }
 
-    public Optional<SongV> Update(Long id, SongV updatedSong) {
-        if (!repo.existsById(id)) {
-            return Optional.empty();
-        }
-        return repo.findById(id)
-                .map(song -> {
-                    song.setTitle(updatedSong.getTitle());
-                    song.setArtist(updatedSong.getArtist());
-                    song.setVideo(updatedSong.getVideo());
-                    song.setTab(updatedSong.getTab());
-                    return repo.save(song);
-                });
-
+    public Optional<SongDTO> Update(Long id, SongCreateDTO dto) {
+        return songRepo.findById(id).map(song -> {
+            song.setTitle(dto.getTitle());
+            song.setVideo(dto.getVideo());
+            if (dto.getArtistId() != null) {
+                artistRepo.findById(dto.getArtistId()).ifPresent(song::setArtist);
+            }
+            if (dto.getTabUrl() != null) {
+                if (song.getTab() == null) song.setTab(new Tab());
+                song.getTab().setUrl(dto.getTabUrl());
+            }
+            Song updated = songRepo.save(song);
+            return toDTO(updated);
+        });
     }
 
+    private SongDTO toDTO(Song song) {
+        ArtistDTO artistDTO = new ArtistDTO(song.getArtist().getId(), song.getArtist().getName());
+        TabDTO tabDTO = song.getTab() != null ? new TabDTO(song.getTab().getId(), song.getTab().getUrl()) : null;
+        return new SongDTO(song.getId(), song.getTitle(), artistDTO, song.getVideo(), tabDTO);
+    }
 }

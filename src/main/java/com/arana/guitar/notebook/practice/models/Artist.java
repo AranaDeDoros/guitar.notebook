@@ -30,5 +30,5 @@ public class Artist {
 
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SongV> songs = new ArrayList<>();
+    private List<Song> songs = new ArrayList<>();
 }
