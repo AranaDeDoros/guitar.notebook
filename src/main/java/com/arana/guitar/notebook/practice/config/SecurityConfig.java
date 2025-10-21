@@ -1,5 +1,6 @@
-package com.arana.guitar.notebook.practice.models;
+package com.arana.guitar.notebook.practice.config;
 
+import com.arana.guitar.notebook.practice.models.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
