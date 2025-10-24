@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.arana.guitar.notebook.practice.repo")
-@EntityScan("com.arana.guitar.notebook.practice.models")
+@EnableJpaRepositories("com.arana.guitar.notebook.practice.domain.repo")
+@EntityScan("com.arana.guitar.notebook.practice.domain.models")
 public class Application {
 
 	public static void main(String[] args) {

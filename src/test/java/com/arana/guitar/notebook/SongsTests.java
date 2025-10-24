@@ -1,26 +1,9 @@
 package com.arana.guitar.notebook;
 
-import com.arana.guitar.notebook.practice.models.Artist;
-import com.arana.guitar.notebook.practice.models.Song;
-import com.arana.guitar.notebook.practice.models.Tab;
-import com.arana.guitar.notebook.practice.controllers.SongController;
-import com.arana.guitar.notebook.practice.service.SongService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.arana.guitar.notebook.practice.domain.models.*;
+import com.arana.guitar.notebook.practice.infrastructure.web.controllers.SongController;
+import com.arana.guitar.notebook.practice.application.service.SongService;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 //have to update these tests, ignore for now
 @WebMvcTest(SongController.class)
