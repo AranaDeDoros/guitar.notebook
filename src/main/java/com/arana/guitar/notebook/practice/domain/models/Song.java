@@ -30,5 +30,6 @@ public class Song {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tab_id", unique = true) // Ensures uniqueness at DB level
     private Tab tab;
+    @Convert(converter = ProgressEnumConverter.class)
     private ProgressEnum progress ;
 }

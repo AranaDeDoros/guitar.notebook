@@ -2,6 +2,7 @@ package com.arana.guitar.notebook.practice.infrastructure.web.controllers;
 
 import com.arana.guitar.notebook.practice.application.dto.SongCreateDTO;
 import com.arana.guitar.notebook.practice.application.dto.SongDTO;
+import com.arana.guitar.notebook.practice.application.dto.SongUpdateDTO;
 import com.arana.guitar.notebook.practice.application.service.SongService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class SongController {
     }
 
     @PutMapping("/songs/{id}/update")
-    public ResponseEntity<SongDTO> update(@PathVariable Long id, @RequestBody SongCreateDTO dto) {
+    public ResponseEntity<SongDTO> update(@PathVariable Long id, @RequestBody SongUpdateDTO dto) {
         return service.Update(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

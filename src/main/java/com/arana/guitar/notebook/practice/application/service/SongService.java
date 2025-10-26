@@ -2,6 +2,7 @@ package com.arana.guitar.notebook.practice.application.service;
 
 import com.arana.guitar.notebook.practice.application.dto.SongCreateDTO;
 import com.arana.guitar.notebook.practice.application.dto.SongDTO;
+import com.arana.guitar.notebook.practice.application.dto.SongUpdateDTO;
 import com.arana.guitar.notebook.practice.domain.models.Song;
 import com.arana.guitar.notebook.practice.domain.models.Tab;
 import com.arana.guitar.notebook.practice.domain.models.enums.ProgressEnum;
@@ -68,18 +69,21 @@ public class SongService {
         return true;
     }
 
-    public Optional<SongDTO> Update(Long id, SongCreateDTO dto) {
+    public Optional<SongDTO> Update(Long id, SongUpdateDTO dto) {
         return songRepo.findById(id).map(song -> {
-            song.setTitle(dto.getTitle());
-            song.setVideo(dto.getVideo());
-            if (dto.getArtistId() != null) {
-                artistRepo.findById(dto.getArtistId()).ifPresent(song::setArtist);
-            }
-            if (dto.getTabUrl() != null) {
-                if (song.getTab() == null) song.setTab(new Tab());
-                song.getTab().setUrl(dto.getTabUrl());
-                song.getTab().setComment(dto.getComment());
-            }
+            ProgressEnum progress = ProgressEnum.fromPercentage(dto.getProgress());
+            song.setProgress(progress);
+            //commented for now
+//            song.setTitle(dto.getTitle());
+//            song.setVideo(dto.getVideo());
+//            if (dto.getArtistId() != null) {
+//                artistRepo.findById(dto.getArtistId()).ifPresent(song::setArtist);
+//            }
+//            if (dto.getTabUrl() != null) {
+//                if (song.getTab() == null) song.setTab(new Tab());
+//                song.getTab().setUrl(dto.getTabUrl());
+//                song.getTab().setComment(dto.getComment());
+//            }
             Song updated = songRepo.save(song);
             return songMapper.toDTO(updated);
         });
