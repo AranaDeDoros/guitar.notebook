@@ -56,11 +56,6 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.arana</groupId>
-            <artifactId>guitar.notebook</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.38</version> <!-- Use the latest stable version -->

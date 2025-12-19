@@ -6,4 +6,4 @@ Spring Boot + React app for managing guitar practice songs.
 - Layered structure (domain, application, infrastructure)
 - OpenAPI (Swagger UI) for documentation
 - JPA + MySQL (for now)
-- Frontend in React (on another repo)
+- [Frontend in React](https://github.com/AranaDeDoros/guitar-practice-book)
