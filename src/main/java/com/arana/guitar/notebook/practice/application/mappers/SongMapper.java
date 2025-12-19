@@ -4,6 +4,7 @@ import com.arana.guitar.notebook.practice.application.dto.SongDTO;
 import com.arana.guitar.notebook.practice.application.dto.TabDTO;
 import com.arana.guitar.notebook.practice.domain.models.*;
 import com.arana.guitar.notebook.practice.domain.models.enums.ProgressEnum;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -15,7 +16,8 @@ public class SongMapper {
         if (song == null) return null;
 
         TabDTO tabDTO = song.getTab() != null
-                ? new TabDTO(song.getTab().getId(), song.getTab().getUrl(), song.getTab().getComment())
+                ? new TabDTO(song.getTab().getId(), song.getTab().getUrl(),
+                             song.getTab().getComment())
                 : null;
 
         return new SongDTO(
@@ -28,7 +30,7 @@ public class SongMapper {
         );
     }
 
-    public Song toEntity(SongDTO dto, Artist artist, Tab tab) {
+    public Song toEntity(@NotNull SongDTO dto, Artist artist, Tab tab) {
         Song song = new Song();
         song.setArtist(artist);
         song.setTab(tab);
@@ -41,8 +43,6 @@ public class SongMapper {
         } else {
             song.setPublicId((UUID.randomUUID().toString()));
         }
-
         return song;
-
     }
 }

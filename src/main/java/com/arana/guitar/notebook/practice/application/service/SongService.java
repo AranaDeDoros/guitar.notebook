@@ -11,6 +11,7 @@ import com.arana.guitar.notebook.practice.domain.repo.ArtistRepository;
 import com.arana.guitar.notebook.practice.domain.repo.SongRepository;
 import com.arana.guitar.notebook.practice.domain.repo.TabRepository;
 import com.arana.guitar.notebook.practice.domain.models.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,8 @@ public class SongService {
     private final SongMapper songMapper;
 
     @Autowired
-    public SongService(SongRepository songRepo, ArtistRepository artistRepo, TabRepository tabRepo, SongMapper songMapper) {
+    public SongService(SongRepository songRepo, ArtistRepository artistRepo,
+                       TabRepository tabRepo, SongMapper songMapper) {
         this.songRepo = songRepo;
         this.artistRepo = artistRepo;
         this.tabRepo = tabRepo;
@@ -44,7 +46,7 @@ public class SongService {
         return songRepo.findById(id).map(songMapper::toDTO);
     }
 
-    public SongDTO Store(SongCreateDTO dto) {
+    public SongDTO Store(@NotNull SongCreateDTO dto) {
         Artist artist = artistRepo.findById(dto.getArtistId())
                 .orElseThrow(() -> new RuntimeException("Artist not found"));
 
@@ -57,7 +59,7 @@ public class SongService {
         song.setArtist(artist);
         song.setVideo(dto.getVideo());
         song.setTab(tab);
-        song.setProgress( ProgressEnum.fromPercentage(dto.getProgress() ));
+        song.setProgress(ProgressEnum.fromPercentage(dto.getProgress()));
 
         Song saved = songRepo.save(song);
         return songMapper.toDTO(saved);
