@@ -2,11 +2,13 @@ package com.arana.guitar.notebook.practice.domain.models;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 @Table(name = "app_user")
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @Entity
 public class User {
     @Id

@@ -2,7 +2,6 @@ package com.arana.guitar.notebook.practice.application.service;
 
 import com.arana.guitar.notebook.practice.domain.repo.UserRepository;
 import com.arana.guitar.notebook.practice.domain.models.User;
-import com.arana.guitar.notebook.practice.domain.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
