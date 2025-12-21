@@ -1,5 +1,7 @@
 package com.arana.guitar.notebook.practice.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SongCreate {
+    @NotBlank
+    private String publicId;
+    @NotBlank
     private String title;
-    private Long artistId;
+    @NotBlank
     private String video;
+    @NotBlank
     private String tabUrl;
+    @NotBlank
     private String comment;
+    @PositiveOrZero
     private int progress;
 }

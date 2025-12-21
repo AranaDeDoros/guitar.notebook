@@ -16,7 +16,7 @@ public class SongMapper {
         if (song == null) return null;
 
         Tab tabDTO = song.getTab() != null
-                ? new Tab(song.getTab().getId(), song.getTab().getUrl(),
+                ? new Tab(song.getTab().getPublicId(), song.getTab().getUrl(),
                              song.getTab().getComment())
                 : null;
 

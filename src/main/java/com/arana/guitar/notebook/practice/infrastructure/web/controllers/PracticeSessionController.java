@@ -4,6 +4,7 @@ import com.arana.guitar.notebook.practice.application.dto.PracticeSessionRequest
 import com.arana.guitar.notebook.practice.application.service.PracticeSessionService;
 import com.arana.guitar.notebook.practice.domain.models.PracticeSession;
 import com.arana.guitar.notebook.practice.domain.models.User;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class PracticeSessionController {
 
     @PostMapping
     public ResponseEntity<PracticeSession> create(
-            @RequestBody PracticeSessionRequest request
+            @Valid @RequestBody PracticeSessionRequest request
     ) {
         User owner = getCurrentUser(); // placeholder
         PracticeSession created = service.create(
@@ -47,7 +48,7 @@ public class PracticeSessionController {
     @PutMapping("/{id}")
     public ResponseEntity<PracticeSession> update(
             @PathVariable Long id,
-            @RequestBody PracticeSessionRequest request
+            @Valid @RequestBody PracticeSessionRequest request
     ) {
         return service.update(id, request.getSongIds(), request.getName())
                 .map(ResponseEntity::ok)

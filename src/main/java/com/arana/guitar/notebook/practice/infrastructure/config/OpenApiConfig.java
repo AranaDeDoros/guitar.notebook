@@ -15,7 +15,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Guitar Practice Notebook API")
                         .description("API for managing your own songbook progress")
-                        .version("1.0.0")
+                        .version("0.2.0")
                         .contact(new Contact()
                                 .name("AranaDeDoros")
                                 .email("aradede@guitarnotebook.com")));

@@ -34,19 +34,20 @@ public class SongService {
         this.songMapper = songMapper;
     }
 
-    public List<Song> All() {
+    public List<Song> findAll() {
         return songRepo.findAll()
                 .stream()
                 .map(songMapper::toDTO)
                 .toList();
     }
 
-    public Optional<Song> Get(Long id) {
-        return songRepo.findById(id).map(songMapper::toDTO);
+    public Optional<Song> findById(String id) {
+        return songRepo.findByPublicId(id).map(songMapper::toDTO);
     }
 
-    public Song Store(@NotNull SongCreate dto) {
-        Artist artist = artistRepo.findById(dto.getArtistId())
+
+    public Song create(@NotNull SongCreate dto) {
+        Artist artist = artistRepo.findByPublicId(dto.getPublicId())
                 .orElseThrow(() -> new RuntimeException("Artist not found"));
 
         Tab tab = new Tab();
@@ -64,14 +65,14 @@ public class SongService {
         return songMapper.toDTO(saved);
     }
 
-    public boolean Delete(Long id) {
+    public boolean deleteById(Long id) {
         if (!songRepo.existsById(id)) return false;
         songRepo.deleteById(id);
         return true;
     }
 
-    public Optional<Song> Update(Long id, SongUpdate dto) {
-        return songRepo.findById(id).map(song -> {
+    public Optional<Song> findById(String id, SongUpdate dto) {
+        return songRepo.findByPublicId(id).map(song -> {
             ProgressEnum progress = ProgressEnum.fromPercentage(dto.getProgress());
             song.setProgress(progress);
             //commented for now

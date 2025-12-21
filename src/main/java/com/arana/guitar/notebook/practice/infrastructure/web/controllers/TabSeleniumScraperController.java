@@ -3,14 +3,7 @@ package com.arana.guitar.notebook.practice.infrastructure.web.controllers;
 import com.arana.guitar.notebook.practice.application.dto.TabRequest;
 import com.arana.guitar.notebook.practice.application.dto.TabResponse;
 import com.arana.guitar.notebook.practice.application.service.ScrapingService;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.coyote.Response;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +18,8 @@ public class TabSeleniumScraperController {
     }
 
     @GetMapping("/tab")
-    public ResponseEntity<TabResponse> scrapeTabWithSelenium(@RequestBody TabRequest request) {
+    public ResponseEntity<TabResponse> scrapeTabWithSelenium
+            (@Valid @RequestBody TabRequest request) {
         var tabResponse = this.scraperServ.scrap(request.getTab());
 
         if (tabResponse instanceof TabResponse.ErrorTabResponse error) {

@@ -26,7 +26,8 @@ public class SecurityConfig {
                         //.requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -34,7 +35,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+            throws Exception {
         return config.getAuthenticationManager();
     }
 }

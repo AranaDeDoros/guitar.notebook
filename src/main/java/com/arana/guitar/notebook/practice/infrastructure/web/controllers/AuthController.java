@@ -1,6 +1,7 @@
 package com.arana.guitar.notebook.practice.infrastructure.web.controllers;
 
 import com.arana.guitar.notebook.practice.domain.models.JwtUtil;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+
+    public AuthController(AuthenticationManager authenticationManager,
+                          JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @NotNull AuthRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getUsername(),
+                                                        request.getPassword())
         );
-
         String token = jwtUtil.generateToken(request.getUsername());
         return ResponseEntity.ok(new AuthResponse(token));
     }

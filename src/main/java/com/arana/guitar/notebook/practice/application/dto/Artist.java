@@ -1,5 +1,6 @@
 package com.arana.guitar.notebook.practice.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Artist {
-    private Long id;
+    @NotBlank
+    private String id;
+    @NotBlank
     private String name;
 }
