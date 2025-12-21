@@ -1,9 +1,8 @@
 package com.arana.guitar.notebook.practice.application.service;
 
-import com.arana.guitar.notebook.practice.application.dto.SongCreateDTO;
-import com.arana.guitar.notebook.practice.application.dto.SongDTO;
-import com.arana.guitar.notebook.practice.application.dto.SongUpdateDTO;
-import com.arana.guitar.notebook.practice.domain.models.Song;
+import com.arana.guitar.notebook.practice.application.dto.SongCreate;
+import com.arana.guitar.notebook.practice.application.dto.Song;
+import com.arana.guitar.notebook.practice.application.dto.SongUpdate;
 import com.arana.guitar.notebook.practice.domain.models.Tab;
 import com.arana.guitar.notebook.practice.domain.models.enums.ProgressEnum;
 import com.arana.guitar.notebook.practice.application.mappers.SongMapper;
@@ -35,18 +34,18 @@ public class SongService {
         this.songMapper = songMapper;
     }
 
-    public List<SongDTO> All() {
+    public List<Song> All() {
         return songRepo.findAll()
                 .stream()
                 .map(songMapper::toDTO)
                 .toList();
     }
 
-    public Optional<SongDTO> Get(Long id) {
+    public Optional<Song> Get(Long id) {
         return songRepo.findById(id).map(songMapper::toDTO);
     }
 
-    public SongDTO Store(@NotNull SongCreateDTO dto) {
+    public Song Store(@NotNull SongCreate dto) {
         Artist artist = artistRepo.findById(dto.getArtistId())
                 .orElseThrow(() -> new RuntimeException("Artist not found"));
 
@@ -54,14 +53,14 @@ public class SongService {
         tab.setUrl(dto.getTabUrl());
         tab.setComment(dto.getComment());
 
-        Song song = new Song();
+        com.arana.guitar.notebook.practice.domain.models.Song song = new com.arana.guitar.notebook.practice.domain.models.Song();
         song.setTitle(dto.getTitle());
         song.setArtist(artist);
         song.setVideo(dto.getVideo());
         song.setTab(tab);
         song.setProgress(ProgressEnum.fromPercentage(dto.getProgress()));
 
-        Song saved = songRepo.save(song);
+        com.arana.guitar.notebook.practice.domain.models.Song saved = songRepo.save(song);
         return songMapper.toDTO(saved);
     }
 
@@ -71,7 +70,7 @@ public class SongService {
         return true;
     }
 
-    public Optional<SongDTO> Update(Long id, SongUpdateDTO dto) {
+    public Optional<Song> Update(Long id, SongUpdate dto) {
         return songRepo.findById(id).map(song -> {
             ProgressEnum progress = ProgressEnum.fromPercentage(dto.getProgress());
             song.setProgress(progress);
@@ -86,7 +85,7 @@ public class SongService {
 //                song.getTab().setUrl(dto.getTabUrl());
 //                song.getTab().setComment(dto.getComment());
 //            }
-            Song updated = songRepo.save(song);
+            com.arana.guitar.notebook.practice.domain.models.Song updated = songRepo.save(song);
             return songMapper.toDTO(updated);
         });
     }

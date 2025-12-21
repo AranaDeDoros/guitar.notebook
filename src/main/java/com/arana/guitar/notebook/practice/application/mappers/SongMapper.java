@@ -1,7 +1,7 @@
 package com.arana.guitar.notebook.practice.application.mappers;
 
-import com.arana.guitar.notebook.practice.application.dto.SongDTO;
-import com.arana.guitar.notebook.practice.application.dto.TabDTO;
+import com.arana.guitar.notebook.practice.application.dto.Song;
+import com.arana.guitar.notebook.practice.application.dto.Tab;
 import com.arana.guitar.notebook.practice.domain.models.*;
 import com.arana.guitar.notebook.practice.domain.models.enums.ProgressEnum;
 import jakarta.validation.constraints.NotNull;
@@ -12,15 +12,15 @@ import java.util.UUID;
 @Component
 public class SongMapper {
 
-    public SongDTO toDTO(Song song) {
+    public Song toDTO(com.arana.guitar.notebook.practice.domain.models.Song song) {
         if (song == null) return null;
 
-        TabDTO tabDTO = song.getTab() != null
-                ? new TabDTO(song.getTab().getId(), song.getTab().getUrl(),
+        Tab tabDTO = song.getTab() != null
+                ? new Tab(song.getTab().getId(), song.getTab().getUrl(),
                              song.getTab().getComment())
                 : null;
 
-        return new SongDTO(
+        return new Song(
                 song.getPublicId(),
                 song.getTitle(),
                 song.getArtist().getName(),
@@ -30,8 +30,8 @@ public class SongMapper {
         );
     }
 
-    public Song toEntity(@NotNull SongDTO dto, Artist artist, Tab tab) {
-        Song song = new Song();
+    public com.arana.guitar.notebook.practice.domain.models.Song toEntity(@NotNull Song dto, Artist artist, com.arana.guitar.notebook.practice.domain.models.Tab tab) {
+        com.arana.guitar.notebook.practice.domain.models.Song song = new com.arana.guitar.notebook.practice.domain.models.Song();
         song.setArtist(artist);
         song.setTab(tab);
         song.setTitle(dto.getTitle());

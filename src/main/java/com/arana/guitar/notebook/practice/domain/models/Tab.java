@@ -1,5 +1,6 @@
 package com.arana.guitar.notebook.practice.domain.models;
 
+import com.arana.guitar.notebook.practice.domain.models.enums.TabSource;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Tab {
     private Long id;
     @Column(nullable = false, unique = true, updatable = false)
     private String publicId = UUID.randomUUID().toString(); // Public key
+    private TabSource source;
     private String url;
     private String comment;
 

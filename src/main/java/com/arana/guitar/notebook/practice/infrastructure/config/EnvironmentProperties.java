@@ -9,4 +9,5 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "environment")
 public class EnvironmentProperties {
     private String jwt_secret;
+    private String chromium;
 }

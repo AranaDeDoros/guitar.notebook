@@ -1,8 +1,8 @@
 package com.arana.guitar.notebook.practice.infrastructure.web.controllers;
 
-import com.arana.guitar.notebook.practice.application.dto.SongCreateDTO;
-import com.arana.guitar.notebook.practice.application.dto.SongDTO;
-import com.arana.guitar.notebook.practice.application.dto.SongUpdateDTO;
+import com.arana.guitar.notebook.practice.application.dto.SongCreate;
+import com.arana.guitar.notebook.practice.application.dto.Song;
+import com.arana.guitar.notebook.practice.application.dto.SongUpdate;
 import com.arana.guitar.notebook.practice.application.service.SongService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,25 +20,25 @@ public class SongController {
     }
 
     @GetMapping("/songs")
-    public List<SongDTO> songs() {
+    public List<Song> songs() {
         return service.All();
     }
 
     @PostMapping("/songs/store")
-    public ResponseEntity<SongDTO> create(@RequestBody SongCreateDTO dto) {
-        SongDTO created = service.Store(dto);
+    public ResponseEntity<Song> create(@RequestBody SongCreate dto) {
+        Song created = service.Store(dto);
         return ResponseEntity.ok(created);
     }
 
     @GetMapping("/songs/{id}/view")
-    public ResponseEntity<SongDTO> view(@PathVariable Long id) {
+    public ResponseEntity<Song> view(@PathVariable Long id) {
         return service.Get(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/songs/{id}/update")
-    public ResponseEntity<SongDTO> update(@PathVariable Long id, @RequestBody SongUpdateDTO dto) {
+    public ResponseEntity<Song> update(@PathVariable Long id, @RequestBody SongUpdate dto) {
         return service.Update(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
