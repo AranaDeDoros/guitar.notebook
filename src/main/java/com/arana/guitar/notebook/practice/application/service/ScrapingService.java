@@ -2,12 +2,10 @@ package com.arana.guitar.notebook.practice.application.service;
 
 import com.arana.guitar.notebook.practice.application.dto.Tab;
 import com.arana.guitar.notebook.practice.application.dto.TabResponse;
-import com.arana.guitar.notebook.practice.domain.scrapers.UGScrapper;
+import com.arana.guitar.notebook.practice.domain.scrapers.Scraper;
 import com.arana.guitar.notebook.practice.infrastructure.config.EnvironmentProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
@@ -15,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScrapingService {
     private final EnvironmentProperties props;
+    private final Scraper scraper;
 
-    public ScrapingService( EnvironmentProperties props){
+    public ScrapingService(EnvironmentProperties props, Scraper scraper){
         this.props = props;
+        this.scraper = scraper;
     }
 
     public TabResponse scrap(Tab tab){
@@ -39,7 +39,7 @@ public class ScrapingService {
             //"https://tabs.ultimate-guitar.com/tab/dreamgirl/teenage-blue-tabs-3131648";
 
             driver.get(tabUrl);
-            String tabContent = new UGScrapper().retrieveTab(driver);
+            String tabContent = scraper.retrieveTab(driver);
 
             return new TabResponse.SuccessfulTabResponse
                     ("Successfully retrieved tab", tabContent);

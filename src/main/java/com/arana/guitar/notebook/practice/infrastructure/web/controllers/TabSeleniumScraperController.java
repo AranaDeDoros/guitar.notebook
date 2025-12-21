@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/scrape")
 public class TabSeleniumScraperController {
 
-    private final ScrapingService scraper;
+    private final ScrapingService scraperServ;
 
     public TabSeleniumScraperController(ScrapingService scraper) {
-        this.scraper = scraper;
+        this.scraperServ = scraper;
     }
 
     @GetMapping("/tab")
     public ResponseEntity<TabResponse> scrapeTabWithSelenium(@RequestBody TabRequest request) {
-        var tabResponse = this.scraper.scrap(request.getTab());
+        var tabResponse = this.scraperServ.scrap(request.getTab());
 
         if (tabResponse instanceof TabResponse.ErrorTabResponse error) {
             return ResponseEntity.badRequest().body(error);
