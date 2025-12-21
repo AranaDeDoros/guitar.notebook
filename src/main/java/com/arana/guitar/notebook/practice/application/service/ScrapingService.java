@@ -8,7 +8,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ScrapingService {
@@ -18,6 +21,11 @@ public class ScrapingService {
     public ScrapingService(EnvironmentProperties props, Scraper scraper){
         this.props = props;
         this.scraper = scraper;
+    }
+
+    @Async("scraperExecutor")
+    public CompletableFuture<TabResponse> scrapAsync(Tab tab) {
+        return CompletableFuture.completedFuture(scrap(tab));
     }
 
     public TabResponse scrap(Tab tab){

@@ -4,11 +4,14 @@ import com.arana.guitar.notebook.practice.application.dto.TabRequest;
 import com.arana.guitar.notebook.practice.application.dto.TabResponse;
 import com.arana.guitar.notebook.practice.application.service.ScrapingService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
-@RequestMapping("/api/scrape")
+@RequestMapping("/api/scrap")
 public class TabSeleniumScraperController {
 
     private final ScrapingService scraperServ;
@@ -17,14 +20,15 @@ public class TabSeleniumScraperController {
         this.scraperServ = scraper;
     }
 
-    @GetMapping("/tab")
-    public ResponseEntity<TabResponse> scrapeTabWithSelenium
+    @PostMapping("/tab")
+    public CompletableFuture<ResponseEntity<TabResponse>> scrapeTabWithSelenium
             (@Valid @RequestBody TabRequest request) {
-        var tabResponse = this.scraperServ.scrap(request.getTab());
-
-        if (tabResponse instanceof TabResponse.ErrorTabResponse error) {
-            return ResponseEntity.badRequest().body(error);
-        }
-        return ResponseEntity.ok(tabResponse);
+        return scraperServ.scrapAsync(request.getTab())
+                .thenApply(tabResponse -> {
+                    if (tabResponse instanceof TabResponse.ErrorTabResponse error) {
+                        return ResponseEntity.badRequest().body(error);
+                    }
+                    return ResponseEntity.ok(tabResponse);
+        });
     }
 }
