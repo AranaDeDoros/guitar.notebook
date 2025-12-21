@@ -4,7 +4,6 @@ import com.arana.guitar.notebook.practice.application.dto.TabRequest;
 import com.arana.guitar.notebook.practice.application.dto.TabResponse;
 import com.arana.guitar.notebook.practice.application.service.ScrapingService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

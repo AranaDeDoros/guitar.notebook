@@ -5,6 +5,7 @@ import com.arana.guitar.notebook.practice.application.dto.TabResponse;
 import com.arana.guitar.notebook.practice.domain.scrapers.Scraper;
 import com.arana.guitar.notebook.practice.infrastructure.config.EnvironmentProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import jakarta.annotation.PostConstruct;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,6 +22,11 @@ public class ScrapingService {
     public ScrapingService(EnvironmentProperties props, Scraper scraper){
         this.props = props;
         this.scraper = scraper;
+    }
+
+    @PostConstruct
+    void setupWebDriver() {
+        WebDriverManager.chromedriver().setup();
     }
 
     @Async("scraperExecutor")
