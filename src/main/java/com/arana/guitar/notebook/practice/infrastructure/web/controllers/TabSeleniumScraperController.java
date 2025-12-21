@@ -1,11 +1,16 @@
 package com.arana.guitar.notebook.practice.infrastructure.web.controllers;
 
+import com.arana.guitar.notebook.practice.application.dto.TabRequest;
+import com.arana.guitar.notebook.practice.application.dto.TabResponse;
+import com.arana.guitar.notebook.practice.application.service.ScrapingService;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.coyote.Response;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,35 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/scrape")
 public class TabSeleniumScraperController {
 
+    private final ScrapingService scraper;
+
+    public TabSeleniumScraperController(ScrapingService scraper) {
+        this.scraper = scraper;
+    }
+
     @GetMapping("/tab")
-    public ResponseEntity<String> scrapeTabWithSelenium() {
-        WebDriverManager.chromedriver().setup();
+    public ResponseEntity<TabResponse> scrapeTabWithSelenium(@RequestBody TabRequest request) {
+        var tabResponse = this.scraper.scrap(request.getTab());
 
-        // Opciones para usar Chrome sin interfaz gráfica
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe");
-        options.addArguments("--headless");        // Ejecutar en modo headless
-        options.addArguments("--disable-gpu");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-
-        WebDriver driver = new ChromeDriver(options);
-
-        try {
-            String url = "https://tabs.ultimate-guitar.com/tab/dreamgirl/teenage-blue-tabs-3131648";
-            driver.get(url);
-
-            Thread.sleep(3000);
-
-            WebElement preElement = driver.findElement(By.tagName("pre"));
-            String tabContent = preElement.getText();
-
-            return ResponseEntity.ok(tabContent);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Web scraping error: " + e.getMessage());
-        } finally {
-            driver.quit();
+        if (tabResponse instanceof TabResponse.ErrorTabResponse error) {
+            return ResponseEntity.badRequest().body(error);
         }
+        return ResponseEntity.ok(tabResponse);
     }
 }
