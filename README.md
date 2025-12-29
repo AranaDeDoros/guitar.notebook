@@ -1,5 +1,9 @@
-# Guitar Notebook 
-Spring Boot + React app for managing guitar practice songs.
+# SessionBook
+<p align="center">
+  <img height="400" alt="sessionbook" src="https://github.com/user-attachments/assets/52d76087-872c-46a7-932e-b17fe6c5e178" />
+</p>
+
+<p align="center"> Spring Boot + React app for managing guitar practice songs.</p>
 
 ## Backend Architecture
 - DDD oriented.
