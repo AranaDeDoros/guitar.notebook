@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/api/scrap")
+@RequestMapping("/api/scrape")
 public class TabSeleniumScraperController {
 
     private final ScrapingService scraperServ;
