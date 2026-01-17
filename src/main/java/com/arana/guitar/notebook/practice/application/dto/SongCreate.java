@@ -15,8 +15,12 @@ public class SongCreate {
     @NotBlank
     private String title;
     @NotBlank
+    //publicId
+    private String artist;
+    @NotBlank
     private String video;
     @NotBlank
+    //publicId
     private String tabUrl;
     @NotBlank
     private String comment;

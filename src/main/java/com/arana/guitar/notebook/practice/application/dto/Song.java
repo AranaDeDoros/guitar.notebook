@@ -16,7 +16,7 @@ public class Song {
     @NotBlank
     private String title;
     @NotBlank
-    private String artist;
+    private Artist artist;
     @NotBlank
     private String video;
     @NotNull
