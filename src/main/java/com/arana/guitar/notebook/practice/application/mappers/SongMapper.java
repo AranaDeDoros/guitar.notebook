@@ -12,6 +12,11 @@ import java.util.UUID;
 @Component
 public class SongMapper {
 
+    private final ArtistMapper artistMapper;
+
+    public SongMapper(ArtistMapper artistMapper) {
+        this.artistMapper = artistMapper;
+    }
     public Song toDTO(com.arana.guitar.notebook.practice.domain.models.Song song) {
         if (song == null) return null;
 
@@ -23,15 +28,18 @@ public class SongMapper {
         return new Song(
                 song.getPublicId(),
                 song.getTitle(),
-                song.getArtist().getName(),
+                artistMapper.toDTO(song.getArtist()),
                 song.getVideo(),
                 tabDTO,
                 song.getProgress() != null ? song.getProgress().getPercentage() : 0
         );
     }
 
-    public com.arana.guitar.notebook.practice.domain.models.Song toEntity(@NotNull Song dto, Artist artist, com.arana.guitar.notebook.practice.domain.models.Tab tab) {
-        com.arana.guitar.notebook.practice.domain.models.Song song = new com.arana.guitar.notebook.practice.domain.models.Song();
+    public com.arana.guitar.notebook.practice.domain.models.Song toEntity(@NotNull Song dto,
+           Artist artist, com.arana.guitar.notebook.practice.domain.models.Tab tab)
+    {
+        com.arana.guitar.notebook.practice.domain.models.Song song =
+                new com.arana.guitar.notebook.practice.domain.models.Song();
         song.setArtist(artist);
         song.setTab(tab);
         song.setTitle(dto.getTitle());
